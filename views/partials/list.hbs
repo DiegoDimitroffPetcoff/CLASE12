@@ -1,0 +1,41 @@
+<ul>
+   
+
+        
+        {{# if Mascotas }}
+          
+        
+
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Object</th>
+                <th scope="col">Price</th>
+                
+              </tr>
+            </thead>
+
+            
+            {{#each Mascotas}}
+            <tbody>
+              <tr>
+                <th scope="row">{{this.id}}</th>
+                <td>{{this.title}}</td>
+                <td>${{this.price}}</td>
+
+            </tbody>
+            {{/each}}  
+          </table>
+        
+          {{else}}
+          <h2>There are not saved products yet</h1>
+          
+        {{/if}}
+
+
+
+
+   
+</ul>
+

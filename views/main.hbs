@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>head}}
+</head>
+<body class="container">
+    <header>
+        {{>header}}
+    </header>
+    
+    <main>
+        <center>
+        <div class="jumbotron">
+            <h1>Add new Product</h1>
+            <h5>Fill in all the square to add a new product</h5>
+                <form action="/" method="post">
+                <label>Add Object:</label>
+                <input type="text" name="title" id="object_searched" />
+                <br/>
+                <br/>
+                <label>Add Price:</label>
+                <input type="text" name="price" id="price_searched" />
+                
+                
+                <br/>
+                <input  type="submit" value="Submit" id="submite" />
+              </form>
+            
+       
+                <div class="jumbotron">
+            <h1>Here you will find All the products saved!!</h1>
+            {{>list}}
+
+        </div>
+         </center>
+    </main>
+
+    <footer>
+       {{>footer}}
+    </footer>
+</body>
+</html>
