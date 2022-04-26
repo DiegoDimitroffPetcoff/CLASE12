@@ -1,13 +1,11 @@
 const express = require("express");
-const { Server: HttpServer} = require('http');
-const { Server: IOServer } = require('socket.io');
+const { Server: HttpServer } = require("http");
+const { Server: IOServer } = require("socket.io");
 const fs = require("fs");
-
 
 const app = express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
-
 
 const multer = require("multer");
 const handlebars = require("express-handlebars");
@@ -156,43 +154,42 @@ class NuevoObjeto {
 }
 
 // __________________________________________________________________________
-const messages= [];
-const chat= [];
-
-io.on('connection', (socket)=>{
-  console.log('Cliente en la Home de la web');
-  socket.emit('messages', messages);
-
-    socket.on('new-message', data=>{
-    messages.push(data);
-    io.sockets.emit('messages',messages)
-  });
-
-});
+const messages = [];
+const chat = [];
 
 io.on("connection", (socket) => {
-    console.log("Usuario conectado al Chat");
-    socket.emit('chat', chat);
 
-    socket.on("newChat", (data) => {
-      chat.push(data);
-      io.sockets.emit("chat", chat);
-    });
+  console.log("Cliente en la Home de la web");
 
+
+  // socket.emit("messages", messages);
+  // socket.on("new-message", (data1) => {
+  //   messages.push(data1);
+  //   io.sockets.emit("messages", messages);
+  //   });
+            socket.emit('chat', chat);
+            socket.on("newChat", (data) => {
+            chat.push(data);
+            io.sockets.emit("chat", chat);});
+            
 });
 
+// io.on("connection", (socket) => {
+//     console.log("Usuario conectado al Chat");
+//     socket.emit('chat', chat);
 
+//     socket.on("newChat", (data) => {
+//       chat.push(data);
+//       io.sockets.emit("chat", chat);
+//     });
 
-
-
-
-
+// });
 
 app.get("/", function (req, res) {
-  res.render("main", { root:__dirname,});
+  res.render("main", { root: __dirname });
 });
 app.get("/about", function (req, res) {
-  res.render("about", { });
+  res.render("about", {});
 });
 
 // app.get("/", function (req, res) {
@@ -205,10 +202,6 @@ app.get("/about", function (req, res) {
 //     Mascotas: contenedor.read()
 //   });
 // });
-
-
-
-
 
 const server = httpServer.listen(8080, () => {
   console.log("Server " + PORT + " is reading rigth now");
