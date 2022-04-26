@@ -11,8 +11,15 @@
     
     <main>
         <div class="jumbotron">
-            <h1>Here you will find All the products saved!!</h1>
-            {{>list}}
+    <h1>Chat</h1>
+    
+    <form onsubmit="addMessagechat(this)">
+        <input type="text" id="username" placeholder="Name"> <br>
+        <input type="text" id="texto" placeholder="Your Message"><br>
+        <input type="submit" value="enviar"><br>
+    </form>
+
+    <div id="filaTexto"></div>
     </main>
 
     <footer>

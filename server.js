@@ -28,7 +28,7 @@ app.engine(
 
 app.set("view engine", "hbs");
 app.set("views", "./views");
-app.use(express.static("/public"));
+app.use(express.static("./public"));
 
 let storage = multer.diskStorage({
   destination: function (req, res, cb) {
@@ -156,26 +156,52 @@ class NuevoObjeto {
 }
 
 // __________________________________________________________________________
-
-// app.get("/", function (req, res) {
-//   res.sendFile("main", { root:__dirname, Mascotas: contenedor.read()});
-// });
-
+const messages= [];
+const chat= [];
 
 io.on('connection', (socket)=>{
-  console.log("mensaje desde el servidor");
-  socket.emit('myMessage','Usuario conectado')
+  console.log('Cliente nuevo');
+  socket.emit('messages', messages);
+
+    socket.on('new-message', data=>{
+    messages.push(data);
+    io.sockets.emit('messages',messages)
+  });
+
 });
 
-// app.get("/", function (req, res) {
-//   res.render("main", { Mascotas: contenedor.read()});
-// });
+io.on("connection", (socket) => {
+  console.log("Usuario conectado al Chat");
+  socket.emit('chat', chat);
+
+  socket.on("newChat", (data) => {
+    chat.push(data);
+    io.sockets.emit("chat", chat);
+  });
+});
+
+
+app.get("/", function (req, res) {
+  res.render("main", { Mascotas: contenedor.read()});
+});
+
+app.get("/", function (req, res) {
+  res.sendFile("main", { root:__dirname,});
+});
+
+
+
 app.post("/", function (req, res) {
   res.render("main", {
     todo: contenedor.save(req.body),
     Mascotas: contenedor.read()
   });
 });
+
+app.get("/about", function (req, res) {
+  res.render("about", { });
+});
+
 
 
 const server = httpServer.listen(8080, () => {
