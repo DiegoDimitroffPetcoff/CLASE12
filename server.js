@@ -1,8 +1,8 @@
-
+const express = require("express");
 const { Server: HttpServer} = require('http');
 const { Server: IOServer } = require('socket.io');
 const fs = require("fs");
-const express = require("express");
+
 
 const app = express();
 const httpServer = new HttpServer(app);
@@ -160,7 +160,7 @@ const messages= [];
 const chat= [];
 
 io.on('connection', (socket)=>{
-  console.log('Cliente nuevo');
+  console.log('Cliente en la Home de la web');
   socket.emit('messages', messages);
 
     socket.on('new-message', data=>{
@@ -171,36 +171,42 @@ io.on('connection', (socket)=>{
 });
 
 io.on("connection", (socket) => {
-  console.log("Usuario conectado al Chat");
-  socket.emit('chat', chat);
+    console.log("Usuario conectado al Chat");
+    socket.emit('chat', chat);
 
-  socket.on("newChat", (data) => {
-    chat.push(data);
-    io.sockets.emit("chat", chat);
-  });
+    socket.on("newChat", (data) => {
+      chat.push(data);
+      io.sockets.emit("chat", chat);
+    });
+
 });
+
+
+
+
+
+
 
 
 app.get("/", function (req, res) {
-  res.render("main", { Mascotas: contenedor.read()});
+  res.render("main", { root:__dirname,});
 });
-
-app.get("/", function (req, res) {
-  res.sendFile("main", { root:__dirname,});
-});
-
-
-
-app.post("/", function (req, res) {
-  res.render("main", {
-    todo: contenedor.save(req.body),
-    Mascotas: contenedor.read()
-  });
-});
-
 app.get("/about", function (req, res) {
   res.render("about", { });
 });
+
+// app.get("/", function (req, res) {
+//   res.render("main", { Mascotas: contenedor.read()});
+// });
+
+// app.post("/", function (req, res) {
+//   res.render("main", {
+//     todo: contenedor.save(req.body),
+//     Mascotas: contenedor.read()
+//   });
+// });
+
+
 
 
 
