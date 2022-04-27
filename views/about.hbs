@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {{>head}}
+  <head>
+    <script src="/chat.js" defer></script>
 </head>
 <body class="container">
     <header>
@@ -14,7 +12,7 @@
     <h1>Chat</h1>
     
     <form onsubmit="addMessagechat(this)">
-        <input type="text" id="username" placeholder="Name"> <br>
+        <input type="email" id="username" placeholder="E-mail"> <br>
         <input type="text" id="texto" placeholder="Your Message"><br>
         <input type="submit" value="enviar"><br>
     </form>
@@ -26,4 +24,3 @@
         {{>footer}}
     </footer>
 </body>
-</html>

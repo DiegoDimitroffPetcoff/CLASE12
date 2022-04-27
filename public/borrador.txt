@@ -1,0 +1,27 @@
+
+  const html = data
+    .map((elem, index) => {
+      return `
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Object</th>
+                <th scope="col">Price</th>
+                
+              </tr>
+            </thead>
+
+            
+            <tbody>
+              <tr>
+                <th scope="row">${elem.author}</th>
+                <td>${elem.author}</td>
+                <td>${elem.text}</td>
+            </tbody>
+            
+          </table>`;
+    })
+    .join(" ");
+
+  document.getElementById("messages").innerHTML = html;

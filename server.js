@@ -50,7 +50,7 @@ class Contenedor {
     let object = x;
 
     try {
-      let data = fs.readFileSync(this.route, "utf-8");
+      let data = fs.readFileSync("./productos.txt", "utf-8");
       array = JSON.parse(data);
       console.log("Ingreso por TRY");
 
@@ -60,15 +60,37 @@ class Contenedor {
       console.log("catch error");
     }
 
-    console.log(array);
     object.id = array.length + 1;
     array.push(object);
 
     let lastId = array.length + 1;
-    fs.writeFileSync(this.route, JSON.stringify(array));
+    fs.writeFileSync("./productos.txt", JSON.stringify(array));
 
     this.id = lastId++;
   }
+
+  saveChat(x) {
+    let array = [];
+    let object = x;
+
+    try {
+      let data = fs.readFileSync("./historial.txt", "utf-8");
+      array = JSON.parse(data);
+      console.log("Ingreso por TRY");
+
+    } catch {
+      console.log("catch error");
+    }
+
+    object.id = array.length + 1;
+    array.push(object);
+
+    let lastId = array.length + 1;
+    fs.writeFileSync("./historial.txt", JSON.stringify(array));
+
+    this.id = lastId++;
+  }
+
 
   // -----------------------------------------------------------------------------
 
@@ -157,51 +179,45 @@ class NuevoObjeto {
 const messages = [];
 const chat = [];
 
-io.on("connection", (socket) => {
+const prueba = contenedor.read();
 
+
+console.log(prueba);
+
+io.on("connection", (socket) => {
   console.log("Cliente en la Home de la web");
 
+  socket.emit("messages", prueba);
+  socket.on("new-message", (data1) => {
+    contenedor.save(data1);
+    prueba.push(data1);
 
-  // socket.emit("messages", messages);
-  // socket.on("new-message", (data1) => {
-  //   messages.push(data1);
-  //   io.sockets.emit("messages", messages);
-  //   });
-            socket.emit('chat', chat);
-            socket.on("newChat", (data) => {
-            chat.push(data);
-            io.sockets.emit("chat", chat);});
-            
+    io.sockets.emit("messages", prueba);
+    
+    
+  });
 });
 
-// io.on("connection", (socket) => {
-//     console.log("Usuario conectado al Chat");
-//     socket.emit('chat', chat);
+io.on("connection", (socket) => {
+  console.log("Usuario conectado al Chat");
 
-//     socket.on("newChat", (data) => {
-//       chat.push(data);
-//       io.sockets.emit("chat", chat);
-//     });
+  socket.emit("chat", chat);
 
-// });
+  socket.on("newChat", (data) => {
+    Date(data)
+    contenedor.saveChat(data)
+    chat.push(data);
+    io.sockets.emit("chat", chat);
+  });
+});
 
 app.get("/", function (req, res) {
   res.render("main", { root: __dirname });
 });
 app.get("/about", function (req, res) {
-  res.render("about", {});
+  res.render("about", { root: __dirname });
 });
 
-// app.get("/", function (req, res) {
-//   res.render("main", { Mascotas: contenedor.read()});
-// });
-
-// app.post("/", function (req, res) {
-//   res.render("main", {
-//     todo: contenedor.save(req.body),
-//     Mascotas: contenedor.read()
-//   });
-// });
 
 const server = httpServer.listen(8080, () => {
   console.log("Server " + PORT + " is reading rigth now");

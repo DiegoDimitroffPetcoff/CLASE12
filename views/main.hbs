@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {{>head}}
+  <head>
+    <script src="/index.js" defer></script>
 </head>
 <body class="container">
     <header>
@@ -12,23 +10,6 @@
         <center>
         <div class="jumbotron">
             <h1>Add new Product</h1>
-            {{!-- <h5>Fill in all the square to add a new product</h5>
-                <form action="/" method="post">
-                <label>Add Object:</label>
-                <input type="text" name="title" id="object_searched" />
-                <br/>
-                <br/>
-                <label>Add Price:</label>
-                <input type="text" name="price" id="price_searched" />
-                
-                
-                <br/>
-                <input  type="submit" value="Submit" id="submite" />
-              </form> --}}
-            
-       
-
-
             <h5>Fill in all the square to add a new product</h5>
                 <form onsubmit="addMessage(this)">
                 <label>Add Object:</label>
@@ -40,35 +21,38 @@
                 <br/>
                 <input  type="submit" value="Submit" id="submite" />
               </form>
+              <div class="jumbotron">
 
-
-              
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <div class="jumbotron">
             <h1>Here you will find All the products saved!!</h1>
-            <div id="messages"></div>
             
+            <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Object</th>
+                <th scope="col">Price</th>
+                
+              </tr>
+            </thead>
 
-
-        </div>
+            <div id="tabla"></div>
+            <tbody>
+              <tr>
+                <th scope="row">
+                  <div id="id"></div>
+                </th>
+                  
+                 <th> <div id="object"></div> </th>
+                 <th> <div id="price"></div> </th>
+              </tr>
+            </tbody>
+            
+          </table>
+            
+          </div>
          </center>
     </main>
 
     <footer>
        {{>footer}}
     </footer>
-</body>
-</html>

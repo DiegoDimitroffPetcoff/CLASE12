@@ -1,1 +1,1 @@
-[]
+[{"title":"Heladera","price":2000,"id":1},{"title":"Cocina","price":3000,"id":2},{"title":"Lavarropas","price":3000,"id":3}]
